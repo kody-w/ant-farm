@@ -1,36 +1,45 @@
-# RAPPID_SPEC — Identity v2
+# RAPPID_SPEC — Identity (Eternity format)
 
-> **Frozen excerpt** of the canonical rappid contract (`rapp-rappid/2.0`). Bundled at planting time on 2026-05-09T12:46:13Z.
+> **Frozen excerpt** of the canonical rappid contract (`rapp-rappid/2.0`). Bundled at planting time on 2026-05-09T12:46:13Z. Updated to the consolidated Eternity format per Constitution Art. XXXIV.1 (locked 2026-06-03).
 
 ## Format
+
+```
+rappid:@<owner>/<slug>:<hex>
+```
+
+One string that is BOTH identity and self-locating. No `v2:`/`v3:` prefix, no inline `<kind>:` segment, no `@github.com/...` suffix. `kind` now lives in the `rappid.json` **record** (a field), not the string.
+
+Example (this neighborhood's):
+
+```
+rappid:@kody-w/ant-farm:<hex>
+```
+
+(See `../rappid.json` for the actual value.)
+
+### Legacy form (read-forever, never emitted)
+
+Older records used the v2 envelope below. It is still **read** and canonicalized into the Eternity form above (`tools/door_address.py::canonicalize_rappid`); it is never written. Hashes are preserved; the prior string is recorded under `_migrated_from`.
 
 ```
 rappid:v2:<kind>:@<owner>/<repo>:<32-hex-no-dashes>@github.com/<owner>/<repo>
 ```
 
-Example (this neighborhood's):
-
-```
-rappid:v2:<kind>:@kody-w/ant-farm:<32-hex>@github.com/kody-w/ant-farm
-```
-
-(See `../rappid.json` for the actual value.)
-
 ## Components
 
 | Part | Rule |
 |---|---|
-| Prefix `rappid:v2:` | Literal. Tells parsers this is a v2 rappid. |
-| `<kind>` | One of: `neighborhood`, `ant-farm`, `braintrust`, `workspace`, `twin`, `prototype`. |
-| `@<owner>/<repo>` | The GitHub composite identity. The `@` prefix is literal and required. |
-| `<32-hex-no-dashes>` | A UUID4 with dashes stripped — 32 lowercase hex characters. Minted ONCE at planting; permanent thereafter. |
-| `@github.com/<owner>/<repo>` | The substrate URL, suffixed for self-resolution. |
+| Prefix `rappid:` | Literal. |
+| `@<owner>/<slug>` | The canonical location. `github.com/<owner>/<slug>` is the door; every door URL derives from it by string parsing (no lookup, no API). The `@` prefix is literal and required. |
+| `<hex>` | The identity hash and join key. New mints are full 256-bit (64-hex); grandfathered 32-hex hashes from migrated records are preserved as-is, never regenerated. |
+| `kind` | NOT in the string. Carried as a field in the `rappid.json` record. One of: `neighborhood`, `ant-farm`, `braintrust`, `workspace`, `twin`, `prototype`. |
 
 ## Invariants (Constitution Art. XXXIV.5)
 
 1. **Permanence.** Once minted, a rappid is permanent for the lifetime of the neighborhood. Re-grafting, re-planting, kernel upgrades — none of these mint a new rappid.
 2. **Bond preservation.** The bond technique (egg → overlay → hatch back) preserves the rappid through every kernel upgrade.
-3. **Lineage chain.** A neighborhood's `parent_rappid` chains back to its ancestor (the species root for many: `rappid:v2:prototype:@rapp/origin:0b635450c04249fbb4b1bdb571044dec@github.com/kody-w/RAPP`).
+3. **Lineage chain.** A neighborhood's `parent_rappid` chains back to its ancestor (the species root for many: `rappid:@kody-w/RAPP:0b635450c04249fbb4b1bdb571044dec`).
 4. **No two organisms share a rappid.** Mint via `uuid.uuid4().hex` — collision probability is negligible.
 5. **The rappid is the seed source for the neighborhood's holocard.** `derive_seed(rappid_str)` via BLAKE2b-64 produces a deterministic 64-bit ID. Same rappid → same seed → same incantation, forever.
 
@@ -39,7 +48,7 @@ rappid:v2:<kind>:@kody-w/ant-farm:<32-hex>@github.com/kody-w/ant-farm
 | Field | Required | Notes |
 |---|---|---|
 | `schema`       | yes | `rapp-rappid/2.0` |
-| `rappid`       | yes | The full v2 string |
+| `rappid`       | yes | The full Eternity string (`rappid:@<owner>/<slug>:<hex>`) |
 | `kind`         | yes | One of the 6 kinds above |
 | `name`         | yes | Slug — matches the repo name |
 | `display_name` | yes | Human-readable |
