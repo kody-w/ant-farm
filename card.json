@@ -39,13 +39,13 @@
   "retreat_cost": 2,
   "flavor_text": "Many ants, one trail. The colony writes the story.",
   "meta": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "category": "ant-farm",
     "author": "kody-w",
     "quality_tier": "community",
     "license": "PolyForm-Small-Business",
     "kind": "ant-farm",
-    "rappid": "rappid:v2:ant-farm:@kody-w/ant-farm:26b8d39106564c358d16d6d63211ae8a@github.com/kody-w/ant-farm",
+    "rappid": "rappid:@kody-w/ant-farm:26b8d39106564c358d16d6d63211ae8a",
     "gate_url": "https://kody-w.github.io/ant-farm/",
     "summon_url": "https://kody-w.github.io/RAPPcards/#summon&seed=3952247850618721442",
     "_compliance": "rappcards/1.1.2 \u2014 kody-w/RAPPcards/SPEC.md"
