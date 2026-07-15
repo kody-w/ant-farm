@@ -6,7 +6,7 @@
   "display_name": "RAPP Ant Farm",
   "github": "https://github.com/kody-w/ant-farm",
   "url": "https://kody-w.github.io/ant-farm/",
-  "parent_rappid": "rappid:@kody-w/RAPP:0b635450c04249fbb4b1bdb571044dec",
+  "parent_rappid": "rappid:@kody-w/rapp:9a8f0a4b5a710e20f4d819a0f37d2a4c9f113b5e78fb3c29e70b54fff48a38f9",
   "parent_repo": "https://github.com/kody-w/RAPP",
   "planted_by": "kody-w",
   "planted_at": "2026-05-09T01:56:31Z",
@@ -15,5 +15,6 @@
   "_migrated_from": [
     "rappid:@kody-w/ant-farm:26b8d39106564c358d16d6d63211ae8a",
     "rappid:v2:ant-farm:@kody-w/ant-farm:26b8d39106564c358d16d6d63211ae8a@github.com/kody-w/ant-farm"
-  ]
+  ],
+  "_parent_migrated_from": "rappid:@kody-w/RAPP:0b635450c04249fbb4b1bdb571044dec"
 }
