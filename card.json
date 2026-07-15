@@ -45,7 +45,7 @@
     "quality_tier": "community",
     "license": "PolyForm-Small-Business",
     "kind": "ant-farm",
-    "rappid": "rappid:@kody-w/ant-farm:26b8d39106564c358d16d6d63211ae8a",
+    "rappid": "rappid:@kody-w/ant-farm:debc6e4ee769f3f5d8df56e274a7f9dfca8922dec6aa723acef5810d76de3a0a",
     "gate_url": "https://kody-w.github.io/ant-farm/",
     "summon_url": "https://kody-w.github.io/RAPPcards/#summon&seed=3952247850618721442",
     "_compliance": "rappcards/1.1.2 \u2014 kody-w/RAPPcards/SPEC.md"
