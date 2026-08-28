@@ -1,0 +1,35 @@
+name: Harvest Pheromones Snapshot
+
+# Article XXIV (the Static Data Covenant, kody-w/RAR CONSTITUTION.md): pages read
+# committed static data, never the GitHub API. index.html reads the
+# ant-pheromone labeled issues from state/pheromones.json — this workflow
+# keeps that snapshot fresh so newly dropped pheromones show up for visitors
+# without the browser ever calling api.github.com.
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # every 15 minutes
+  issues:
+    types: [opened, edited, labeled]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Harvest ant-pheromone issues
+        run: python3 scripts/harvest_pheromones.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/pheromones.json
+          git diff --cached --quiet || { git commit -m "chore: refresh pheromones snapshot [skip ci]"; git push; }

@@ -163,7 +163,7 @@ function longestChain(pheromones) {
 function escapeHtml(s) { return String(s || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 
 async function refreshPheromones() {
-  const { data, stale } = await cachedGhJson(`https://api.github.com/repos/${REPO}/issues?labels=${LABEL}&state=all&per_page=100`);
+  const { data, stale } = await cachedGhJson(`https://raw.githubusercontent.com/${REPO}/main/state/pheromones.json` /* Article XXIV: CI snapshot in issues-API shape, never the API */);
   if (stale) document.getElementById("stale-pill").hidden = false;
   const pheromones = parsePheromones(data);
   const ants = new Set(pheromones.map(p => p.ant_id || "anon"));
